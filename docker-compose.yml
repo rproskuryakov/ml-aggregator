@@ -10,3 +10,30 @@ services:
      - '/app/node_modules'
    ports:
      - '4201:4200' 
+
+ database:
+   image: mongo
+   container_name: mongo-database
+   environment:
+     - MONGO_INITDB_DATABASE=my-database
+     - MONGO_INITDB_ROOT_USERNAME=my-container-root-username
+     - MONGO_INITDB_ROOT_PASSWORD=secret
+   volumes:
+     - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+     - ./mongo-volume:/data/db
+   ports:
+     - '27017:27017'
+
+ backend:
+   container_name: ml-agg-back
+   build:
+     context: ./backend
+   volumes:
+     - './backend/app:/app'
+   ports:
+     - '9001:8000'
+
+volumes:
+  database:
+  backend:
+  frontend:
