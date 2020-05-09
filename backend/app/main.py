@@ -19,6 +19,7 @@ class ExamSchema(BaseModel):
 class PostExamSchema(BaseModel):
     title: str
     description: str
+    long_description: str
 
 
 MONGO_HOST = os.environ.get('MONGO_HOST', 'database')
@@ -67,7 +68,7 @@ async def get_exams() -> List[ExamSchema]:
 @app.post("/exams")
 async def add_exam(exam: PostExamSchema):
     dictionary = exam.dict()
-    dictionary.update({"id": len(EXAMS) + 1,
+    dictionary.update({"id": await app.db.exams.count_documents({}) + 1,
                        "updated_at": "2020-05-09T15:36:04.431417+00:00",
                        "last_updated_by": "HTTP POST Request"})
     await app.db.exams.insert_one(dictionary)
