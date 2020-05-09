@@ -14,8 +14,10 @@ import {Component} from '@angular/core';
       <!-- <button mat-button (click)="signOut()" *ngIf="authenticated">Sign Out</button> -->
     </mat-toolbar>
 
+<div class="view-container">
+  <router-outlet></router-outlet>
+</div>
 
-    <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.css']
 })
