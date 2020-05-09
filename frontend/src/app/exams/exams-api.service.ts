@@ -8,7 +8,7 @@ import { Exam } from './exam.model';
 @Injectable()
 export class ExamsApiService {
 
-constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   private static _handleError(err: HttpErrorResponse | any) {
@@ -22,5 +22,10 @@ constructor(private http: HttpClient) {
       .pipe(
       catchError(ExamsApiService._handleError)
       );
+  }
+
+  saveExam(exam: Exam): Observable<any> {
+    return this.http
+      .post(`${API_URL}/exams`, exam);
   }
 }
