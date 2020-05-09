@@ -32,6 +32,9 @@ services:
      - './backend/app:/app'
    ports:
      - '9001:8000'
+   expose:
+     - '8000'
+     - '9001'
 
 volumes:
   database:
