@@ -10,6 +10,10 @@ import { ExamFormComponent } from './exams/exam-form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ExamsComponent } from './exams/exams.component';
 
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+
 
 const appRoutes: Routes = [
   { path: 'new-exam', component: ExamFormComponent },
@@ -31,6 +35,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
+    NoopAnimationsModule,
+    MatButtonModule,
+    MatToolbarModule,
   ],
   providers: [ExamsApiService],
   bootstrap: [AppComponent]

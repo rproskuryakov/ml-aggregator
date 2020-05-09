@@ -10,7 +10,7 @@ import {ExamsApiService} from './exams-api.service';
       <button routerLink="/new-exam">New Exam</button>
       <ul>
         <li *ngFor="let exam of examsList">
-
+          {{exam.title}}
         </li>
       </ul>
     </div>
