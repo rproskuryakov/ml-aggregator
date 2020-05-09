@@ -53,25 +53,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-EXAMS = [ExamSchema(**{"created_at": "2018-02-21T15:32:13.188803+00:00",
-                       "description": "Test your knowledge with SQLAlchemy",
-                       "id": 1.0,
-                       "last_updated_by": "script",
-                       "title": "SQLAlchemy Exam",
-                       "updated_at": "2018-02-21T15:32:13.188823+00:00"})
-    ,
-         ExamSchema(
-             **{
-                 "created_at": "2018-02-21T15:36:04.431399+00:00",
-                 "description": "Tricky questions about Typescript",
-                 "id": 2.0,
-                 "title": "Typescript Exam",
-                 "last_updated_by": "HTTP POST request",
-                 "updated_at": "2018-02-21T15:36:04.431417+00:00"
-             }
-         )
-         ]
-
 
 @app.get("/exams")
 async def get_exams() -> List[ExamSchema]:
