@@ -15,8 +15,8 @@ services:
    image: mongo
    container_name: mongo-database
    environment:
-     - MONGO_INITDB_DATABASE=my-database
-     - MONGO_INITDB_ROOT_USERNAME=my-container-root-username
+     - MONGO_INITDB_DATABASE=mlDatabase
+     - MONGO_INITDB_ROOT_USERNAME=mongo
      - MONGO_INITDB_ROOT_PASSWORD=secret
    volumes:
      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
