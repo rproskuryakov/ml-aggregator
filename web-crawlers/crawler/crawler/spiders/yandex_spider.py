@@ -35,7 +35,7 @@ class YandexSpider(scrapy.Spider):
         # if next_page is not None:
         #    yield response.follow(next_page, self.parse)
 
-    def parse_article(self, response, base_info=None):
+    def parse_article(self, response, *, base_info):
         if base_info is None:
             base_info = {}
         return {

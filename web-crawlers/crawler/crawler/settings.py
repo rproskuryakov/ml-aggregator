@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for crawler project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-#     https://docs.scrapy.org/en/latest/topics/settings.html
-#     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+
 
 BOT_NAME = 'crawler'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
 
-SPLASH_URL = 'http://127.0.0.1:8002'
+SPLASH_URL = os.environ.get('SPLASH_URL', 'http://localhost:8002')
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'crawler (+http://www.yourdomain.com)'
+# USER_AGENT = 'crawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -33,9 +27,16 @@ SPIDER_MIDDLEWARES = {
 }
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+MONGO_URI = os.environ.get('MONGO_URI', 'http://localhost:27017')
+MONGO_DATABASE = os.environ.get('MONGO_DATABASE', 'mongo')
+ITEM_PIPELINES = {
+    # 'crawler.pipelines.MongoPipeline': 300,
+}
+
 # HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+# CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
