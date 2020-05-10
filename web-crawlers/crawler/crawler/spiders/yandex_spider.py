@@ -1,11 +1,17 @@
 import scrapy
+import scrapy_splash
 
 
 class YandexSpider(scrapy.Spider):
     name = 'yandex research'
-    start_urls = [
-        'https://research.yandex.com/publications',
-    ]
+
+    def start_requests(self):
+        urls = [
+            'https://research.yandex.com/publications'
+        ]
+        for url in urls:
+            yield scrapy_splash.SplashRequest(url=url,
+                                              callback=self.parse)
 
     def parse(self, response):
         for article in response.css('div.publication-item.publication-item_type_horizontal'):

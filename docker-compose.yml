@@ -36,6 +36,12 @@ services:
      - '8000'
      - '9001'
 
+  splash:
+    container_name: ml-agg-splash
+    image: scrapinghub/splash:3.4.1
+    ports:
+      - '8002:8050'
+
 volumes:
   database:
   backend:
