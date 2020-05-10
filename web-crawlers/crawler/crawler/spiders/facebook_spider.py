@@ -4,10 +4,12 @@ import scrapy_splash
 
 class FacebookSpider(scrapy.Spider):
     name = 'facebook'
+    facebook_base_url = 'https://ai.facebook.com'
 
     def start_requests(self):
         urls = [
-            'https://ai.facebook.com/results/?q&content_types[0]=publication&sort_by=relevance&view=list&page=1',
+            self.facebook_base_url + f'/results/?q&content_types[0]=publication&sort_by=relevance&view=list&page={i}'
+            for i in range(1, 60)
         ]
         lua_script = """
         function main(splash, args)
@@ -31,9 +33,17 @@ class FacebookSpider(scrapy.Spider):
     def parse(self, response):
         for article in response.xpath('//div[@id="fb_ai_results_grid"]/div'):
             authors = article.css('p._8w6f._8xm4._8w61._8w6h._8zob::text').get().split(',')
-            yield {
-                'researchArea': article.css('div._8x6u h4::text').get(),
-                'name': article.css('div._8wpz h4::text').get(),
-                'authors': [name.strip() for name in authors],
-                'pre-text': article.css('div._8xkk p::text').get(),
-            }
+            article_url = self.facebook_base_url + article.css('a._8xc5._8x97._8w61').xpath('@href').get()
+            yield response.follow(article_url,
+                                  callback=self.parse_article,
+                                  cb_kwargs={'base_info': {
+                                      'researchArea': article.css('div._8x6u h4::text').get(),
+                                      'name': article.css('div._8wpz h4::text').get(),
+                                      'authors': [name.strip() for name in authors],
+                                      'pre-text': article.css('div._8xkk p::text').get(),
+                                      'url': article_url,
+                                  }})
+
+    def parse_article(self, response, *, base_info):
+        return {**base_info,
+                "abstract": response.css('p._8w6f._8w61._8w6h::text').get()}
