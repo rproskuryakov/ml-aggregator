@@ -4,6 +4,5 @@ node_modules
 .ideamongo-volume
 mongo-volume
 .idea
-**/__pycache__
-__pycache__
+__pycache__/
 *.json

@@ -13,7 +13,7 @@ services:
 
  database:
    image: mongo
-   container_name: mongo-database
+   container_name: ml-agg-mongo
    environment:
      - MONGO_INITDB_DATABASE=mlDatabase
      - MONGO_INITDB_ROOT_USERNAME=mongo
@@ -36,11 +36,11 @@ services:
      - '8000'
      - '9001'
 
-  splash:
-    container_name: ml-agg-splash
-    image: scrapinghub/splash:3.4.1
-    ports:
-      - '8002:8050'
+ splash:
+   container_name: ml-agg-splash
+   image: scrapinghub/splash:3.4.1
+   ports:
+     - '8002:8050'
 
 volumes:
   database:

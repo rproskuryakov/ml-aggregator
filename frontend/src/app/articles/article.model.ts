@@ -4,7 +4,7 @@ export class Article {
     public abstract: string,
     public url: string,
     public source: string,
-    public researchAreas?: List[string],
-    public authors?: List[string],
+    public researchAreas?: Array<string>,
+    public authors?: Array<string>,
   ) {}
 }
