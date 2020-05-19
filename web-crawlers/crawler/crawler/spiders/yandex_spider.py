@@ -56,7 +56,6 @@ class YandexSpider(scrapy.Spider):
                                           'imageUrl': article.css('img.publication-item__image').xpath('@src').get(),
                                           'articleUrl': article_url,
                                           'source': 'yandex',
-                                          'date': None,
                                       }
                                   )
                                   )
@@ -71,7 +70,8 @@ class YandexSpider(scrapy.Spider):
         return {
             **base_info,
             'description': response.css('div.publication-page__content::text').get(),
-            # 'date': response.css('div.publication-page__param-list a::text').get(),
-            # 'researchAreas': response.css('div.publication-page__param-list a::text').getall(),
+            'people': response.xpath('//a[contains(@href, "/people/")]/text()').getall(),
+            'date': response.css('div.publication-page__params div::text').getall()[-1],
+            'researchAreas': response.xpath('//a[contains(@href, "themeSlug")]/text()').getall(),
             # 'publishedIn': response.css('div.publication-page__param-list a::text').getall(),
         }

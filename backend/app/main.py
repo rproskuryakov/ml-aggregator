@@ -22,6 +22,15 @@ class PostExamSchema(BaseModel):
     long_description: str
 
 
+class ArticleSchema(BaseModel):
+    name: str
+    abstract: str
+    url: str
+    source: str
+    research_areas: List[str]
+    date: str
+
+
 MONGO_HOST = os.environ.get('MONGO_HOST', 'database')
 MONGO_PORT = os.environ.get('MONGO_PORT', 27017)
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'secret')
@@ -55,17 +64,17 @@ app.add_middleware(
 )
 
 
-@app.get("/exams")
-async def get_exams() -> List[ExamSchema]:
-    exams = []
-    cursor = app.db.exams.find()
-    for exam in await cursor.to_list(length=10):
-        exam.pop('_id')
-        exams.append(exam)
-    return exams
+@app.get("/articles")
+async def get_articles() -> List[ArticleSchema]:
+    articles = []
+    cursor = app.db.articles.find()
+    for article in await cursor.to_list(length=10):
+        article.pop('_id')
+        articles.append(article)
+    return articles
 
 
-@app.post("/exams")
+@app.post("/articles")
 async def add_exam(exam: PostExamSchema):
     dictionary = exam.dict()
     dictionary.update({"id": await app.db.exams.count_documents({}) + 1,

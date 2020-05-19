@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse }from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { API_URL } from '../env';
-import { Exam } from './exam.model';
+import { Article } from './article.model';
 
 @Injectable()
-export class ExamsApiService {
+export class ArticlesApiService {
 
   constructor(private http: HttpClient) {
   }
@@ -16,16 +16,16 @@ export class ExamsApiService {
   }
 
   // GET list of public, future events
-  getExams(): Observable<Exam[]> {
+  getArticles(): Observable<Article[]> {
     return this.http
-      .get<Exam[]>(`${API_URL}/exams`)
+      .get<Article[]>(`${API_URL}/articles`)
       .pipe(
-      catchError(ExamsApiService._handleError)
+      catchError(ArticlesApiService._handleError)
       );
   }
 
-  saveExam(exam: Exam): Observable<any> {
+  saveArticle(article: Article): Observable<any> {
     return this.http
-      .post(`${API_URL}/exams`, exam);
+      .post(`${API_URL}/articles`, article);
   }
 }
