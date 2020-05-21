@@ -9,7 +9,8 @@ services:
      - './frontend:/app'
      - '/app/node_modules'
    ports:
-     - '4201:4200' 
+     - '4201:4200'
+   command: ["ng", "serve", "--host", "0.0.0.0"]
 
  database:
    image: mongo
@@ -35,12 +36,20 @@ services:
    expose:
      - '8000'
      - '9001'
+   command: ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
 
  splash:
    container_name: ml-agg-splash
    image: scrapinghub/splash:3.4.1
    ports:
      - '8002:8050'
+
+ crawler:
+   container_name: ml-agg-spider
+   build:
+     context: ./web-crawlers
+   command: ["scrapyd"]
+
 
 volumes:
   database:

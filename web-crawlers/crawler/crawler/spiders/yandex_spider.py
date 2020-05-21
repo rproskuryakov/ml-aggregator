@@ -41,7 +41,7 @@ class YandexSpider(scrapy.Spider):
                                               endpoint='/execute',
                                               args={'html': 1,
                                                     'lua_source': self.lua_script,
-                                                    'wait': 30,})
+                                                    'wait': 30, })
 
     def parse(self, response):
         for article in response.css('div.publication-item.publication-item_type_horizontal'):
@@ -50,12 +50,13 @@ class YandexSpider(scrapy.Spider):
                                   callback=self.parse_article,
                                   cb_kwargs=dict(
                                       base_info={
-                                          'authors': article.css('a.publication-item__researcher::text').getall(),
                                           'name': article.css('a.publication-item__title::text').get(),
-                                          'meta': article.css('div.publication-item__meta::text').get(),
-                                          'imageUrl': article.css('img.publication-item__image').xpath('@src').get(),
+                                          'meta': {'conference': article.css('div.publication-item__meta::text').get(),
+                                                   'imageUrl': article.css('img.publication-item__image').xpath(
+                                                       '@src').get(),
+                                                   },
                                           'articleUrl': article_url,
-                                          'source': 'yandex',
+                                          'source': 'Yandex',
                                       }
                                   )
                                   )
@@ -69,9 +70,17 @@ class YandexSpider(scrapy.Spider):
             base_info = {}
         return {
             **base_info,
-            'description': response.css('div.publication-page__content::text').get(),
-            'people': response.xpath('//a[contains(@href, "/people/")]/text()').getall(),
+            'abstract': response.css('div.publication-page__content::text').get(),
+            'authors': parse_people(response.xpath('//a[contains(@href, "/people/")]/text()').getall()),
             'date': response.css('div.publication-page__params div::text').getall()[-1],
             'researchAreas': response.xpath('//a[contains(@href, "themeSlug")]/text()').getall(),
             # 'publishedIn': response.css('div.publication-page__param-list a::text').getall(),
         }
+
+
+def parse_people(people_list):
+    authors = []
+    for i in range(0, len(people_list), 3):
+        human = people_list[i:i+3]
+        authors.append(" ".join([human[0].strip(), human[-1].strip()]))
+    return authors

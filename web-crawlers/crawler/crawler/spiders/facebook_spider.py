@@ -38,11 +38,12 @@ class FacebookSpider(scrapy.Spider):
                                   callback=self.parse_article,
                                   cb_kwargs={'base_info': {
                                       'researchAreas': article.css('div._8x6u h4::text').getall(),
-                                      'name': article.css('div._8wpz h4::text').get(),
+                                      'name': article.css('div._8wpz h4::text').get().split('|')[0].strip(),
                                       'authors': [name.strip() for name in authors],
                                       'articleUrl': article_url,
+                                      'source': 'Facebook AI Research',
                                   }})
 
     def parse_article(self, response, *, base_info):
         return {**base_info,
-                "description": response.css('p._8w6f._8w61._8w6h::text').get()}
+                "abstract": response.css('p._8w6f._8w61._8w6h::text').get()}

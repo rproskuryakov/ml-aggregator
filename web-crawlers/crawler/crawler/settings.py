@@ -28,10 +28,15 @@ SPIDER_MIDDLEWARES = {
 
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
-MONGO_URI = os.environ.get('MONGO_URI', 'http://localhost:27017')
-MONGO_DATABASE = os.environ.get('MONGO_DATABASE', 'mongo')
+MONGO_HOST = os.environ.get('MONGO_HOST', 'database')
+MONGO_PORT = os.environ.get('MONGO_PORT',  27017)
+MONGO_URI = f"mongodb://{MONGO_HOST}:{MONGO_PORT}"
+MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'secret')
+MONGO_USER = os.environ.get('MONGO_USER', 'mongo')
+MONGO_DATABASE = os.environ.get('MONGO_DATABASE', 'mlDatabase')
+
 ITEM_PIPELINES = {
-    # 'crawler.pipelines.MongoPipeline': 300,
+    'crawler.pipelines.MongoPipeline': 300,
 }
 
 # HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
