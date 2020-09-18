@@ -25,10 +25,11 @@ class PostExamSchema(BaseModel):
 class ArticleSchema(BaseModel):
     name: str
     abstract: str
-    url: str
+    articleUrl: str
     source: str
     research_areas: List[str]
     date: str
+    summary: str
 
 
 MONGO_HOST = os.environ.get('MONGO_HOST', 'database')

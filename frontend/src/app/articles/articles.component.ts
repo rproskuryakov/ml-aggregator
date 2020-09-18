@@ -11,12 +11,12 @@ import {ArticlesApiService} from './articles-api.service';
     <div class="articles">
       <mat-card class="example-card" *ngFor="let article of articlesList" class="mat-elevation-z5">
         <mat-card-content>
-          <mat-card-title>{{article.name}}</mat-card-title>
+          <mat-card-title> <a href="{{article.articleUrl}}">{{article.name}}</a></mat-card-title>
           <mat-card-subtitle>{{article.source}}</mat-card-subtitle>
           <p>
-            {{article.abstract}}
+            {{article.summary}}
           </p>
-          <button mat-raised-button color="accent">Start Exam</button>
+          <!--- <app-favourite-button></app-favourite-button> --->
         </mat-card-content>
       </mat-card>
     </div>

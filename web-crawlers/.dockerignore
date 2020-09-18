@@ -1,0 +1,4 @@
+.venv
+dbs/
+eggs/
+logs/

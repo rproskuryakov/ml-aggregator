@@ -8,12 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RouterModule, Routes } from '@angular/router';
 import { ArticlesComponent } from './articles/articles.component';
+import { FavouriteButton } from './favourite-button/favourite-button.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 
 const appRoutes: Routes = [
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ArticlesComponent,
+    FavouriteButton,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatCardModule,
     MatInputModule,
+    MatIconModule,
   ],
   providers: [ArticlesApiService],
   bootstrap: [AppComponent]

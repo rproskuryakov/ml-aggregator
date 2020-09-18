@@ -52,3 +52,11 @@ class MongoPipeline:
     def process_item(self, item, spider):
         self.db[self.collection_name].insert_one(dict(item))
         return item
+
+
+class AbstractSummarizationPipeline:
+    def process_item(self, item, spider):
+        abstract = item.get('abstract')
+        if abstract is None:
+            raise DropItem("Missing abstract in %s" % item)
+        return item

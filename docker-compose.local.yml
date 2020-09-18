@@ -31,10 +31,11 @@ services:
      context: ./backend
    volumes:
      - './backend/app:/app'
+   depends_on:
+     - database
    ports:
      - '9001:8000'
    expose:
-     - '8000'
      - '9001'
    command: ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
 
@@ -46,9 +47,23 @@ services:
 
  crawler:
    container_name: ml-agg-spider
+   depends_on:
+     - database
+     - splash
+     - cron-job
    build:
      context: ./web-crawlers
-   command: ["scrapyd"]
+   ports:
+     - '6800:6800'
+   expose:
+     - '6800'
+   command: ["scrapyd", "&&", "scrapyd-deploy"]
+
+ cron-job:
+   container_name: ml-agg-cron
+   build:
+     context: ./cron-job
+   command: ["crond", "&&", "tail", "-f", "/var/log/cron.log"]
 
 
 volumes:

@@ -9,3 +9,29 @@ div.articles {
     grid-template-columns: 1fr;
   }
 }
+
+
+a:link {
+  color: black;
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: black;
+  text-decoration: none;
+  outline: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: blue;
+  text-decoration: none;
+}
+
+/* selected link */
+a:active {
+  color: black;
+  text-decoration: none;
+  outline: none;
+}
